@@ -26,6 +26,7 @@ public class CommandConstants {
     public static final String INVALID_AGE_ARGUMENT = "Invalid Age Argument";
     public static final String INVALID_SEAT_ARGUMENT = "Invalid Seat Argument";
     public static final String INVALID_NAME_ARGUMENT = "Invalid Name Argument";
+    public static final String INVALID_COMMAND_EXCEPTION_MESSAGE = "Invalid Command Exception";
 
 
 
