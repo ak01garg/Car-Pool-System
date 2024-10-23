@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Graph<T> {
-    private Map<T , List<T>> rideGraphMap;
-    private Map<Object, T> nodeIdentifierMap;
+    private final Map<T , List<T>> rideGraphMap;
+    private final Map<String, T> nodeIdentifierMap;
 
 
     public Graph() {
@@ -19,7 +19,7 @@ public class Graph<T> {
         rideGraphMap.computeIfAbsent(source , ( k-> new ArrayList<>())).add(destination);
     }
 
-    public void addNodeIdentifier(Object identifier, T node) {
+    public void addNodeIdentifier(String identifier, T node) {
         nodeIdentifierMap.put(identifier, node);
     }
 
@@ -37,7 +37,7 @@ public class Graph<T> {
         return rideGraphMap;
     }
 
-    public Map<Object, T> getNodeIdentifierMap() {
+    public Map<String, T> getNodeIdentifierMap() {
         return nodeIdentifierMap;
     }
 }

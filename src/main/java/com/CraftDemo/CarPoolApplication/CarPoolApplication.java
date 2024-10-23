@@ -18,9 +18,7 @@ public class CarPoolApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CarPoolApplication.class, args);
 		ApplicationMode applicationMode = ApplicationModeFactory.getApplicationMode(args[0]);
-		if(Objects.nonNull(applicationMode)){
-			applicationMode.init();
-		}
-	}
+        applicationMode.init();
+    }
 
 }

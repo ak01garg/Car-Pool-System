@@ -16,7 +16,7 @@ public class FileReaderMode implements ApplicationMode {
     private final CommandExecutorFactory commandExecutorFactory;
 
     public FileReaderMode() {
-        this.commandExecutorFactory = new CommandExecutorFactory();
+        this.commandExecutorFactory = CommandExecutorFactory.getInstance();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FileReaderMode implements ApplicationMode {
                         }
                     }
                 }catch (Exception e){
-                    System.out.println(e.getClass().toString() + ": " +  e.getMessage());
+                    System.out.println(e.getClass() + ": " +  e.getMessage());
                 }
             }
         } catch (FileNotFoundException e) {

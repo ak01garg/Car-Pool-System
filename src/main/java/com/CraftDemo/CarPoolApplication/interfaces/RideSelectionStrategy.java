@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface RideSelectionStrategy {
 
-    String generateCompositeKey(String source, String destination);
     List<Ride> selectRide(RideSelectionRequest rideSelectionRequest);
 }

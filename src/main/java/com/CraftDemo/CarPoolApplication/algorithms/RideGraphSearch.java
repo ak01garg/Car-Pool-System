@@ -26,7 +26,7 @@ public class RideGraphSearch implements SingleSourceDFS<RideGraphNode, Ride> {
         Set<Ride> filteredRides = new HashSet<>();
         if(Objects.nonNull(src) && Objects.nonNull(destination) && Objects.nonNull(graph)){
             Map<RideGraphNode, List<RideGraphNode>> rideGraphMap = graph.getRideGraphMap();
-            Map<Object, RideGraphNode> nodeIdentifierMap = graph.getNodeIdentifierMap();
+            Map<String, RideGraphNode> nodeIdentifierMap = graph.getNodeIdentifierMap();
             Map<String, List<Ride>> locationRideMapInstance = rideRepository.getLocationRideMapInstance();
             if(!CollectionUtils.isEmpty(locationRideMapInstance.get(src.getLocation()))){
                 filteredRides.addAll(locationRideMapInstance.get(src.getLocation()));

@@ -12,7 +12,11 @@ public class CommandExecutorFactory {
 
     private final List<CommandExecutor> commandExecutorList;
 
-    public CommandExecutorFactory() {
+    private static class CommandExecutorFactoryInitializer{
+        private static final CommandExecutorFactory INSTANCE = new CommandExecutorFactory();
+    }
+
+    private CommandExecutorFactory() {
         commandExecutorList = Arrays.asList(
                 new EndRideCommandExecutor(),
                 new AddUserCommandExecutor(),
@@ -21,6 +25,10 @@ public class CommandExecutorFactory {
                 new BookRideCommandExecutor(),
                 new AddVehicleCommandExecutor()
         );
+    }
+
+    public static CommandExecutorFactory getInstance(){
+        return CommandExecutorFactoryInitializer.INSTANCE;
     }
 
     public List<CommandExecutor> getCommandExecutorList() {

@@ -1,6 +1,5 @@
 package com.CraftDemo.CarPoolApplication.services;
 
-import com.CraftDemo.CarPoolApplication.exceptions.InvalidCommandException;
 import com.CraftDemo.CarPoolApplication.factories.CommandExecutorFactory;
 import com.CraftDemo.CarPoolApplication.interfaces.ApplicationMode;
 import com.CraftDemo.CarPoolApplication.interfaces.CommandExecutor;
@@ -15,7 +14,7 @@ public class ConsoleMode implements ApplicationMode {
     private final CommandExecutorFactory commandExecutorFactory;
 
     public ConsoleMode() {
-        commandExecutorFactory = new CommandExecutorFactory();
+        commandExecutorFactory = CommandExecutorFactory.getInstance();
     }
 
     @Override

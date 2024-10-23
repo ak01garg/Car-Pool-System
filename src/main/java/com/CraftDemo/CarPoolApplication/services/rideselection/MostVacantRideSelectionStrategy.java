@@ -11,6 +11,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.CraftDemo.CarPoolApplication.utils.GraphUtils.generateCompositeLocationKey;
+
 public class MostVacantRideSelectionStrategy implements RideSelectionStrategy {
 
     private final RideFilterService rideFilterService;
@@ -19,10 +21,7 @@ public class MostVacantRideSelectionStrategy implements RideSelectionStrategy {
         rideFilterService = new RideFilterService();
     }
 
-    @Override
-    public String generateCompositeKey(String source, String destination) {
-        return source + "-" + destination;
-    }
+
 
     @Override
     public List<Ride> selectRide(RideSelectionRequest rideSelectionRequest) {
@@ -48,18 +47,17 @@ public class MostVacantRideSelectionStrategy implements RideSelectionStrategy {
 
     private Map<String, List<Ride>> groupRidesBySourceDestination(List<Ride> rideList) {
         return rideList.stream()
-                .collect(Collectors.groupingBy(ride -> generateCompositeKey(
+                .collect(Collectors.groupingBy(ride -> generateCompositeLocationKey(
                         ride.getSource().getName(),
                         ride.getDestination().getName())));
     }
 
     private List<Ride> getDirectRides(RideSelectionRequest rideSelectionRequest, Map<String, List<Ride>> sourceDestinationRideMap) {
-        String compositeKey = generateCompositeKey(rideSelectionRequest.getSource(), rideSelectionRequest.getDestination());
+        String compositeKey = generateCompositeLocationKey(rideSelectionRequest.getSource(), rideSelectionRequest.getDestination());
         if (sourceDestinationRideMap.containsKey(compositeKey)) {
-            Optional<Ride> selectedRide = sourceDestinationRideMap.get(compositeKey).stream()
+            return sourceDestinationRideMap.get(compositeKey).stream()
                     .filter(ride -> ride.getVacantSeats() >= rideSelectionRequest.getSeats())
-                    .max(Comparator.comparingInt(Ride::getVacantSeats));
-            return selectedRide.map(Collections::singletonList).orElse(Collections.emptyList());
+                    .sorted(Comparator.comparingInt(Ride::getVacantSeats).reversed()).collect(Collectors.toList());
         }
         return Collections.emptyList();
     }

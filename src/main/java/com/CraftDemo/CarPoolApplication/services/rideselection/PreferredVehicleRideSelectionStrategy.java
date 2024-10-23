@@ -22,10 +22,6 @@ public class PreferredVehicleRideSelectionStrategy implements RideSelectionStrat
         vehicleRepository = new VehicleRepository();
     }
 
-    @Override
-    public String generateCompositeKey(String source, String destination) {
-        return "";
-    }
 
     @Override
     public List<Ride> selectRide(RideSelectionRequest rideSelectionRequest) {

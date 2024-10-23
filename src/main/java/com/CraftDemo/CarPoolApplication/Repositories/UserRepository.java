@@ -14,6 +14,8 @@ import static com.CraftDemo.CarPoolApplication.utils.UserConstants.*;
 
 public class UserRepository extends BaseRepository {
 
+
+
     public void addUser(User user){
         ValidationUtils.ensureNotNull(user , NULL_USER_VALIDATION_MESSAGE);
         Map<String, User> userNameMapInstance = getUserNameMapInstance();

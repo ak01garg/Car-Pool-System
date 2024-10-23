@@ -84,11 +84,13 @@ public class BookingService {
                 }
             }
             throw new RideNotFoundException(RIDE_NOT_FOUND_EXCEPTION_MESSAGE);
+        }catch (RideFullException | RideNotFoundException e){
+            System.out.println(e.getMessage());
+            throw e;
         }catch (Exception e){
             System.out.println(e.getClass());
             System.out.println("Executing booking rollback and freeing vacant spaces");
             rollBackRideBooking(ride,booking);
-            throw e;
         }
     }
 
