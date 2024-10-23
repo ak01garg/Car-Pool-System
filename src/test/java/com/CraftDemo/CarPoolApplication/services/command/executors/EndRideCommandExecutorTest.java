@@ -1,7 +1,6 @@
 package com.CraftDemo.CarPoolApplication.services.command.executors;
 
 import com.CraftDemo.CarPoolApplication.dto.request.EndRideRequest;
-import com.CraftDemo.CarPoolApplication.enums.CommandConfig;
 import com.CraftDemo.CarPoolApplication.exceptions.CommandParsingException;
 import com.CraftDemo.CarPoolApplication.services.RideService;
 import com.CraftDemo.CarPoolApplication.services.command.parsers.EndRideCommandParser;
@@ -15,7 +14,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class EndRideCommandExecutorTests {
+class EndRideCommandExecutorTest {
 
     @Mock
     private RideService rideService;

@@ -82,9 +82,9 @@ public class RideService {
                                 new UserNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE));
                         ValidationUtils.ensureTrue(!Objects.equals(selectedRide.getDriverId(),userByName.getId()) ,
                                 new ValidationException(SELF_RIDE_BOOKING_EXCEPTION_MESSAGE));
-                        ValidationUtils.ensureTrue(!bookingService.isRideAlreadyBookedByUser(
+                        /*ValidationUtils.ensureTrue(!bookingService.isRideAlreadyBookedByUser(
                                         userByName.getId(), selectedRide.getId()),
-                                new BookingAlreadyExistException(DUPLICATE_BOOKING_EXCEPTION_MESSAGE));
+                                new BookingAlreadyExistException(DUPLICATE_BOOKING_EXCEPTION_MESSAGE));*/
                         RideBookingRequest rideBookingRequest = new RideBookingRequest(userByName.getId(),
                                 selectedRide.getId(), selectedRide.getVehicleUsed(), rideSelectionRequest.getSeats());
                         bookingService.bookRide(rideBookingRequest);

@@ -5,7 +5,6 @@ import com.CraftDemo.CarPoolApplication.dto.request.AddUserRequest;
 import com.CraftDemo.CarPoolApplication.enums.Gender;
 import com.CraftDemo.CarPoolApplication.exceptions.ValidationException;
 import com.CraftDemo.CarPoolApplication.models.User;
-import com.CraftDemo.CarPoolApplication.utils.ValidationUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,7 +17,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class UserServiceTests {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;

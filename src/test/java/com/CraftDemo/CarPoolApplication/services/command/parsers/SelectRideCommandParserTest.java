@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SelectRideCommandParserTests {
+class SelectRideCommandParserTest {
 
     private final SelectRideCommandParser parser = new SelectRideCommandParser();
 
     @Test
     void parseCommandSuccessfully() throws CommandParsingException {
-        String input = "select_ride(John, origin=CityA, destination=CityB, seats=2, Preferred Vehicle=Car)";
+        String input = "select_ride(Aakash, origin=CityA, destination=CityB, seats=2, Preferred Vehicle=Car)";
         RideSelectionRequest result = parser.parseCommand(input);
         assertNotNull(result);
-        assertEquals("John", result.getRequestByUserName());
+        assertEquals("Aakash", result.getRequestByUserName());
         assertEquals("CityA", result.getSource());
         assertEquals("CityB", result.getDestination());
         assertEquals(2, result.getSeats());
@@ -26,7 +26,7 @@ class SelectRideCommandParserTests {
 
     @Test
     void parseCommandWithInsufficientArguments() {
-        String input = "select_ride(John, origin=CityA, destination=CityB, seats=2)";
+        String input = "select_ride(Aakash, origin=CityA, destination=CityB, seats=2)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
@@ -38,19 +38,19 @@ class SelectRideCommandParserTests {
 
     @Test
     void parseCommandWithEmptyOrigin() {
-        String input = "select_ride(John, origin= , destination=CityB, seats=2, PREFERRED_VEHICLE=Car)";
+        String input = "select_ride(Aakash, origin= , destination=CityB, seats=2, PREFERRED_VEHICLE=Car)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
     @Test
     void parseCommandWithEmptyDestination() {
-        String input = "select_ride(John, origin=CityA, destination= , seats=2, PREFERRED_VEHICLE=Car)";
+        String input = "select_ride(Aakash, origin=CityA, destination= , seats=2, PREFERRED_VEHICLE=Car)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
     @Test
     void parseCommandWithEmptyPreferredVehicleName() {
-        String input = "select_ride(John, origin=CityA, destination=CityB, seats=2, PREFERRED_VEHICLE= )";
+        String input = "select_ride(Aakash, origin=CityA, destination=CityB, seats=2, PREFERRED_VEHICLE= )";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
@@ -61,7 +61,7 @@ class SelectRideCommandParserTests {
 
     @Test
     void parseCommandWithNonNumericSeats() {
-        String input = "select_ride(John, origin=CityA, destination=CityB, seats=two, PREFERRED_VEHICLE=Car)";
+        String input = "select_ride(Aakash, origin=CityA, destination=CityB, seats=two, PREFERRED_VEHICLE=Car)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 }

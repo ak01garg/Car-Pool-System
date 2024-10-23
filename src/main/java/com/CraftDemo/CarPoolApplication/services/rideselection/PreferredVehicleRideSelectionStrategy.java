@@ -32,8 +32,7 @@ public class PreferredVehicleRideSelectionStrategy implements RideSelectionStrat
                 for (Ride ride : rideList) {
                     Map<String, Vehicle> vehicleIdMapInstance = vehicleRepository.getVehicleIdMapInstance();
                     Vehicle vehicle = vehicleIdMapInstance.get(ride.getVehicleUsed());
-                    if (ride.getVacantSeats() >= rideSelectionRequest.getSeats() &&
-                            Objects.equals(vehicle.getName(), rideSelectionRequest.getPreferredVehicleName())) {
+                    if (Objects.equals(vehicle.getName(), rideSelectionRequest.getPreferredVehicleName())) {
                         return Collections.singletonList(ride);
                     }
                 }

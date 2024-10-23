@@ -6,12 +6,15 @@ import com.CraftDemo.CarPoolApplication.dto.pojo.RideFilter;
 import com.CraftDemo.CarPoolApplication.dto.request.RideSelectionRequest;
 import com.CraftDemo.CarPoolApplication.interfaces.RideSelectionStrategy;
 import com.CraftDemo.CarPoolApplication.models.Ride;
+import com.CraftDemo.CarPoolApplication.utils.RideUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.CraftDemo.CarPoolApplication.utils.GraphUtils.generateCompositeLocationKey;
+import static com.CraftDemo.CarPoolApplication.utils.RideUtils.*;
+import static com.CraftDemo.CarPoolApplication.utils.RideUtils.groupRidesBySourceDestination;
 
 public class MostVacantRideSelectionStrategy implements RideSelectionStrategy {
 
@@ -39,35 +42,36 @@ public class MostVacantRideSelectionStrategy implements RideSelectionStrategy {
                     ride.getSource().getName().equals(rideSelectionRequest.getSource()));
             if (canReachDestination) {
                 List<Ride> selectedRides = getDirectRides(rideSelectionRequest, sourceDestinationRideMap);
-                return CollectionUtils.isEmpty(selectedRides) ? getIntermediateRides(sourceDestinationRideMap) : selectedRides;
+                return CollectionUtils.isEmpty(selectedRides) ? getIntermediateRides(rideSelectionRequest,sourceDestinationRideMap) : selectedRides;
             }
         }
         return Collections.emptyList();
     }
 
-    private Map<String, List<Ride>> groupRidesBySourceDestination(List<Ride> rideList) {
-        return rideList.stream()
-                .collect(Collectors.groupingBy(ride -> generateCompositeLocationKey(
-                        ride.getSource().getName(),
-                        ride.getDestination().getName())));
-    }
 
     private List<Ride> getDirectRides(RideSelectionRequest rideSelectionRequest, Map<String, List<Ride>> sourceDestinationRideMap) {
         String compositeKey = generateCompositeLocationKey(rideSelectionRequest.getSource(), rideSelectionRequest.getDestination());
         if (sourceDestinationRideMap.containsKey(compositeKey)) {
             return sourceDestinationRideMap.get(compositeKey).stream()
-                    .filter(ride -> ride.getVacantSeats() >= rideSelectionRequest.getSeats())
-                    .sorted(Comparator.comparingInt(Ride::getVacantSeats).reversed()).collect(Collectors.toList());
+                    .max(Comparator.comparingInt(Ride::getVacantSeats))
+                    .map(Collections::singletonList)
+                    .orElse(Collections.emptyList());
         }
         return Collections.emptyList();
     }
 
-    private List<Ride> getIntermediateRides(Map<String, List<Ride>> sourceDestinationRideMap) {
+    private List<Ride> getIntermediateRides(RideSelectionRequest rideSelectionRequest , Map<String, List<Ride>> sourceDestinationRideMap) {
         List<Ride> availableRides = new ArrayList<>();
         for (String key : sourceDestinationRideMap.keySet()) {
             List<Ride> intermediateRides = sourceDestinationRideMap.get(key);
-            availableRides.add(intermediateRides.stream().max(Comparator.comparingInt(Ride::getVacantSeats)).get());
+            List<Ride> eligibleRides = intermediateRides.stream()
+                    .max(Comparator.comparingInt(Ride::getVacantSeats))
+                    .map(Collections::singletonList)
+                    .orElse(Collections.emptyList());
+            availableRides.addAll(eligibleRides);;
         }
         return availableRides;
     }
+
+
 }

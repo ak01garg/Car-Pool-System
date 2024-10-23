@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddUserCommandParserTests {
+class AddUserCommandParserTest {
 
     private final AddUserCommandParser parser = new AddUserCommandParser();
 
@@ -23,13 +23,13 @@ class AddUserCommandParserTests {
 
     @Test
     void parseCommandWithInsufficientArguments() {
-        String input = "John M";
+        String input = "Aakash M";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
     @Test
     void parseCommandWithInvalidGender() {
-        String input = "John X 30";
+        String input = "Aakash X 30";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
@@ -46,7 +46,7 @@ class AddUserCommandParserTests {
 
     @Test
     void parseCommandWithNonNumericAge() {
-        String input = "John M thirty";
+        String input = "Aakash M thirty";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 }

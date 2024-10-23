@@ -15,45 +15,8 @@ import java.util.Map;
 public abstract class BaseRepository {
 
     private static class BaseRepositoryHelper {
-        private static final Map<String, User> userIdUserMap = new HashMap<>();
-        private static final Map<String, User> userNameUserMap = new HashMap<>();
-        private static final Map<String, Vehicle> vehicleIdVehicleMap = new HashMap<>();
-        private static final Map<String, Vehicle> regNoVehicleMap = new HashMap<>();
-        private static final Map<String, Ride> rideIdRideMap = new HashMap<>();
-        private static final Map<String,String> activeVehicleRideMap  =new HashMap<>();
-        private static final Map<String, List<Ride>> userIdRideMap  = new HashMap<>();
         private static final Map<String,List<Ride>> locationRideMap = new HashMap<>();
         private static final Graph<RideGraphNode> locationRideGraph = new Graph<>();
-        private static final Map<String, Booking> bookingIdBookingMap = new HashMap<>();
-        private static final Map<String,List<Booking>> userIdBookingMap = new HashMap<>();
-
-    }
-
-    public Map<String,User> getUserIdMapInstance(){
-        return BaseRepositoryHelper.userIdUserMap;
-    }
-
-    public Map<String,User> getUserNameMapInstance(){
-        return BaseRepositoryHelper.userNameUserMap;
-    }
-    public Map<String,String> getActiveVehicleRideMapInstance(){
-        return BaseRepositoryHelper.activeVehicleRideMap;
-    }
-
-    public Map<String,Vehicle> getVehicleIdMapInstance(){
-        return BaseRepositoryHelper.vehicleIdVehicleMap;
-    }
-
-    public Map<String,Vehicle> getRegNoVehicleMapInstance(){
-        return BaseRepositoryHelper.regNoVehicleMap;
-    }
-
-    public Map<String,Ride> getRideIdRideMapInstance(){
-        return BaseRepositoryHelper.rideIdRideMap;
-    }
-
-    public Map<String,List<Ride>> getUserIdRideMapInstance(){
-        return BaseRepositoryHelper.userIdRideMap;
     }
 
     public Graph<RideGraphNode> getRideGraphInstance(){
@@ -83,11 +46,5 @@ public abstract class BaseRepository {
         }
     }
 
-    public Map<String,Booking> getBookingIdMapInstance(){
-        return BaseRepositoryHelper.bookingIdBookingMap;
-    }
 
-    public Map<String,List<Booking>> getUserIdBookingIdMapInstance(){
-        return BaseRepositoryHelper.userIdBookingMap;
-    }
 }

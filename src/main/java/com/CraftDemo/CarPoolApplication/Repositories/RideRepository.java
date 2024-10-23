@@ -4,10 +4,8 @@ import com.CraftDemo.CarPoolApplication.dto.Graph.RideGraphNode;
 import com.CraftDemo.CarPoolApplication.exceptions.RideAlreadyExistException;
 import com.CraftDemo.CarPoolApplication.models.Ride;
 import com.CraftDemo.CarPoolApplication.utils.ValidationUtils;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+
+import java.util.*;
 
 import static com.CraftDemo.CarPoolApplication.enums.RideStatus.ACTIVE;
 import static com.CraftDemo.CarPoolApplication.enums.RideStatus.EXPIRED;
@@ -16,6 +14,25 @@ import static com.CraftDemo.CarPoolApplication.utils.RideConstants.NULL_RIDE_VAL
 
 
 public class RideRepository extends BaseRepository{
+
+
+    private static class RideRepositoryInitializer{
+        private static final Map<String, Ride> rideIdRideMap = new HashMap<>();
+        private static final Map<String, List<Ride>> userIdRideMap = new HashMap<>();
+        private static final Map<String, List<Ride>> locationRideMap = new HashMap<>();
+    }
+
+    public Map<String, Ride> getRideIdRideMapInstance(){
+        return RideRepositoryInitializer.rideIdRideMap;
+    }
+
+    public Map<String, List<Ride>> getUserIdRideMapInstance(){
+        return RideRepositoryInitializer.userIdRideMap;
+    }
+
+    public Map<String, List<Ride>> getLocationRideMapInstance(){
+        return RideRepositoryInitializer.locationRideMap;
+    }
 
     public void endRide(Ride ride){
         ValidationUtils.ensureNotNull(ride , NULL_RIDE_VALIDATION_MESSAGE);

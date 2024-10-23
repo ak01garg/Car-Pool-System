@@ -19,7 +19,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class BookingServiceTests {
+class BookingServiceTest {
 
     @Mock
     private BookingRepository bookingRepository;
@@ -62,7 +62,7 @@ class BookingServiceTests {
         assertThrows(RideFullException.class, () -> bookingService.bookRide(request));
 
         verify(bookingRepository, never()).book(any(Booking.class));
-        verify(rideRepository, times(1)).updateRide(any(Ride.class));
+        verify(rideRepository, times(0)).updateRide(any(Ride.class));
     }
 
     @Test

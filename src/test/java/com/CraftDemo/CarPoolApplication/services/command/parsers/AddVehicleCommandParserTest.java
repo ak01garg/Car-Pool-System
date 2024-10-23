@@ -6,23 +6,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AddVehicleCommandParserTests {
+class AddVehicleCommandParserTest {
 
     private final AddVehicleCommandParser parser = new AddVehicleCommandParser();
 
     @Test
     void parseCommandSuccessfully() throws CommandParsingException {
-        String input = "add_vehicle(John, Car, ABC123)";
+        String input = "add_vehicle(Aakash, Car, ABC123)";
         AddVehicleRequest result = parser.parseCommand(input);
         assertNotNull(result);
-        assertEquals("John", result.getUserName());
+        assertEquals("Aakash", result.getUserName());
         assertEquals("Car", result.getVehicleName());
         assertEquals("ABC123", result.getRegNo());
     }
 
     @Test
     void parseCommandWithInsufficientArguments() {
-        String input = "add_vehicle(John, Car)";
+        String input = "add_vehicle(Aakash, Car)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
@@ -34,13 +34,13 @@ class AddVehicleCommandParserTests {
 
     @Test
     void parseCommandWithEmptyVehicleName() {
-        String input = "add_vehicle(John, , ABC123)";
+        String input = "add_vehicle(Aakash, , ABC123)";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 
     @Test
     void parseCommandWithEmptyRegNo() {
-        String input = "add_vehicle(John, Car, )";
+        String input = "add_vehicle(Aakash, Car, )";
         assertThrows(CommandParsingException.class, () -> parser.parseCommand(input));
     }
 

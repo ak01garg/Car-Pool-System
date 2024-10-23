@@ -29,7 +29,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class RideServiceTests {
+class RideServiceTest {
 
     @Mock
     private RideRepository rideRepository;
@@ -95,7 +95,7 @@ class RideServiceTests {
         User user = new User("user1", 30, Gender.MALE);
         try(MockedStatic<RideSelectionStrategyFactory> mockedStatic = mockStatic(RideSelectionStrategyFactory.class)){
             mockedStatic.when(() -> RideSelectionStrategyFactory.getRideSelectionStratgeyForCommand(RideSelectionType.MOST_VACANT)).thenReturn(strategy);
-            when(strategy.selectRide(request)).thenReturn(Optional.of(ride));
+            when(strategy.selectRide(request)).thenReturn(Collections.singletonList(ride));
             when(userService.getUserByName("user1")).thenReturn(user);
             when(bookingService.isRideAlreadyBookedByUser("user1", "ride1")).thenReturn(false);
             doNothing().when(bookingService).bookRide(any(RideBookingRequest.class));

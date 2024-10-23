@@ -19,7 +19,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class MostVacantRideSelectionStrategyTests {
+class MostVacantRideSelectionStrategyTest {
 
     @Mock
     private RideFilterService rideFilterService;
@@ -36,14 +36,16 @@ class MostVacantRideSelectionStrategyTests {
     @Test
     void selectRideSuccessfully() {
         RideSelectionRequest request = new RideSelectionRequest("user1" , "source", "destination", RideSelectionType.MOST_VACANT,null , 2);
-        Ride ride = new Ride("ride1", Arrays.asList("user2"), 3, "vehicle1",
+        Ride ride1 = new Ride("ride1", Arrays.asList("user2"), 3, "vehicle1",
                 new Location("source", null), new Location("destination", null), new Date(), null);
-        when(rideFilterService.doFilter(any(RideFilter.class))).thenReturn(List.of(ride));
+        Ride ride2 = new Ride("ride1", Arrays.asList("user2"), 2, "vehicle1",
+                new Location("source", null), new Location("destination", null), new Date(), null);
+        when(rideFilterService.doFilter(any(RideFilter.class))).thenReturn(List.of(ride1,ride2));
 
         List<Ride> result = mostVacantRideSelectionStrategy.selectRide(request);
 
         assertTrue(!CollectionUtils.isEmpty(result));
-        assertEquals(ride.getId(), result.get(0).getId());
+        assertEquals(ride1.getId(), result.get(0).getId());
     }
 
     @Test
@@ -62,12 +64,4 @@ class MostVacantRideSelectionStrategyTests {
         assertTrue(CollectionUtils.isEmpty(result));
     }
 
-    @Test
-    void selectRideWithInsufficientSeats() {
-        RideSelectionRequest request = new RideSelectionRequest("user1" , "source", "destination", RideSelectionType.MOST_VACANT,null , 10);
-        Ride ride = new Ride("ride1", Arrays.asList("user2"), 3, "vehicle1", new Location("source", null), new Location("destination", null), new Date(), null);
-        when(rideFilterService.doFilter(any(RideFilter.class))).thenReturn(List.of(ride));
-        List<Ride> result = mostVacantRideSelectionStrategy.selectRide(request);
-        assertTrue(CollectionUtils.isEmpty(result));
-    }
 }

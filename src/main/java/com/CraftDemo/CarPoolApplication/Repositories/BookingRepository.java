@@ -4,10 +4,7 @@ import com.CraftDemo.CarPoolApplication.exceptions.BookingAlreadyExistException;
 import com.CraftDemo.CarPoolApplication.models.Booking;
 import com.CraftDemo.CarPoolApplication.utils.ValidationUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.CraftDemo.CarPoolApplication.utils.BookingConstants.DUPLICATE_BOOKING_EXCEPTION_MESSAGE;
 import static com.CraftDemo.CarPoolApplication.utils.BookingConstants.NULL_BOOKING_VALIDATION_MESSAGE;
@@ -15,20 +12,26 @@ import static com.CraftDemo.CarPoolApplication.utils.BookingConstants.NULL_BOOKI
 
 public class BookingRepository extends BaseRepository{
 
+    private static class BookingRepositoryInitializer{
+        private static final Map<String, Booking> bookingIdMap = new HashMap<>();
+        private static final Map<String, List<Booking>> userIdBookingIdMap = new HashMap<>();
+    }
+
+    public Map<String, Booking> getBookingIdMapInstance(){
+        return BookingRepositoryInitializer.bookingIdMap;
+    }
+
+    public Map<String, List<Booking>> getUserIdBookingIdMapInstance(){
+        return BookingRepositoryInitializer.userIdBookingIdMap;
+    }
+
     public void book(Booking booking){
         ValidationUtils.ensureNotNull(booking , NULL_BOOKING_VALIDATION_MESSAGE);
         Map<String, Booking> bookingIdMapInstance = getBookingIdMapInstance();
         Map<String, List<Booking>> userIdBookingIdMapInstance = getUserIdBookingIdMapInstance();
-        List<Booking> bookingList = userIdBookingIdMapInstance.get(booking.getUserId());
-        if(Objects.isNull(bookingList) || bookingList.isEmpty() ||
-                bookingList.stream().noneMatch(b -> b.equals(booking))){
-
-            bookingIdMapInstance.put(booking.getId() , booking);
-            userIdBookingIdMapInstance.computeIfAbsent(booking.getUserId(),  (k-> new ArrayList<>())).add(booking);
-            return;
-        }
-
-        throw new BookingAlreadyExistException(DUPLICATE_BOOKING_EXCEPTION_MESSAGE);
+        bookingIdMapInstance.put(booking.getId() , booking);
+        userIdBookingIdMapInstance.computeIfAbsent(booking.getUserId(),
+                (k-> new ArrayList<>())).add(booking);
     }
 
     public void removeBooking(Booking booking){

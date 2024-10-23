@@ -6,6 +6,7 @@ import com.CraftDemo.CarPoolApplication.models.User;
 import com.CraftDemo.CarPoolApplication.utils.ValidationUtils;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -14,6 +15,19 @@ import static com.CraftDemo.CarPoolApplication.utils.UserConstants.*;
 
 public class UserRepository extends BaseRepository {
 
+
+    private static class UserRepositoryInitializer {
+        private static final Map<String, User> userIdUserMap = new HashMap<>();
+        private static final Map<String, User> userNameUserMap = new HashMap<>();
+    }
+
+    public Map<String,User> getUserIdMapInstance(){
+        return UserRepositoryInitializer.userIdUserMap;
+    }
+
+    public Map<String,User> getUserNameMapInstance(){
+        return UserRepositoryInitializer.userNameUserMap;
+    }
 
 
     public void addUser(User user){

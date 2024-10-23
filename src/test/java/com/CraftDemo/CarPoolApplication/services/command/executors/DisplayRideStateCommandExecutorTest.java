@@ -1,7 +1,5 @@
 package com.CraftDemo.CarPoolApplication.services.command.executors;
 
-import com.CraftDemo.CarPoolApplication.dto.pojo.UserStatistics;
-import com.CraftDemo.CarPoolApplication.enums.CommandConfig;
 import com.CraftDemo.CarPoolApplication.enums.Gender;
 import com.CraftDemo.CarPoolApplication.models.Booking;
 import com.CraftDemo.CarPoolApplication.models.Location;
@@ -26,7 +24,7 @@ import static com.CraftDemo.CarPoolApplication.enums.RideStatus.EXPIRED;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class DisplayRideStateCommandExecutorTests {
+class DisplayRideStateCommandExecutorTest {
 
     @Mock
     private BookingService bookingService;
